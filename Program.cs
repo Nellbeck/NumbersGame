@@ -13,7 +13,7 @@ namespace NumbersGame
         public static int RandomNumber()
         {
             Random rand = new Random();
-            int number = rand.Next(0, 25);
+            int number = rand.Next(0, 26);
             return number; // A method to generate a random number from 0 to 25
         }
         static void Main(string[] args)
