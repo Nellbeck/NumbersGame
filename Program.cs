@@ -20,10 +20,11 @@ namespace NumbersGame
         {
 
             Console.WriteLine("Välkommen! Jag tänker på ett nummer. Kan du gissa vilket? Du får fem försök:");
-            int count = 0;
             int randomNumber = RandomNumber(); // Veriable that calls the method and holds that output from the method
+            int count = 5;
+            Console.WriteLine(randomNumber);
 
-            for (int round = 0; round < 5; round++) 
+            for (int round = 5; round > 0; round--) 
             {
                 int userNumber;
 
@@ -48,21 +49,22 @@ namespace NumbersGame
 
                 else if (userNumber > randomNumber)
                 {
-                    Console.WriteLine("Tyvärr, du gissade för högt!"); // output message if the guessed number is to high
+                    count--;
+                    Console.WriteLine($"Tyvärr, du gissade för högt! Du har {count} gissningar kvar."); // output message if the guessed number is to high
                 }
 
                 else 
                 {
-                    Console.WriteLine("Tyvärr, du gissade för lågt!"); // output message if the guessed number is to low.
+                    count--;
+                    Console.WriteLine($"Tyvärr, du gissade för lågt! Du har {count} gissningar kvar."); // output message if the guessed number is to low.
                 }
-                count++;
+                
             } // A loop that will loop 5 times or untill the user have guessed the right number.
-
             Console.WriteLine();
 
-            if (count == 5)
+            if (count == 0)
             {
-                Console.WriteLine("Tyvärr, du lyckades inte gissa talet på fem försök!"); // output message if you've guessed wrong 5 times
+                Console.WriteLine("Tyvärr, du lyckades inte gissa talet på fem försök! Spelet är slut."); // output message if you've guessed wrong 5 times
             }
         }
     }
