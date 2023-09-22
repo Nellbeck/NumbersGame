@@ -22,7 +22,6 @@ namespace NumbersGame
             Console.WriteLine("Välkommen! Jag tänker på ett nummer. Kan du gissa vilket? Du får fem försök:");
             int randomNumber = RandomNumber(); // Veriable that calls the method and holds that output from the method
             int count = 5;
-            Console.WriteLine(randomNumber);
 
             for (int round = 5; round > 0; round--) 
             {
