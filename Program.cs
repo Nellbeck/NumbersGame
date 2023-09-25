@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 
 
 /*
@@ -12,59 +13,96 @@ namespace NumbersGame
     {
         public static int RandomNumber()
         {
-            Random rand = new Random();
-            int number = rand.Next(0, 26);
+            Random random = new Random();
+            int number = random.Next(0, 26);
             return number; // A method to generate a random number from 0 to 25
         }
         static void Main(string[] args)
         {
+            int tryAgainCount = 0;
 
-            Console.WriteLine("Välkommen! Jag tänker på ett nummer. Kan du gissa vilket? Du får fem försök:");
-            int randomNumber = RandomNumber(); // Veriable that calls the method and holds that output from the method
-            int count = 5;
-
-            for (int round = 5; round > 0; round--) 
+            do
             {
-                int userNumber;
+                int randomNumber = RandomNumber(); // Veriable that calls the method and holds a new value when called. 
+                Console.Clear(); // clears the console from text.
+                Console.WriteLine("Välkommen! Jag tänker på ett nummer mellan 0 och 25. Kan du gissa vilket? Du får fem försök:");
+                int tryCount = 5;
 
-                while (true) 
+                for (int userTrys = 5; userTrys > 0; userTrys--)
                 {
-                    try
+                    int userNumber;
+
+                    while (!int.TryParse(Console.ReadLine(), out userNumber))
                     {
-                        userNumber = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Skriv in bara siffror.");
+                    } // Loop that will check so that user only use numbers as input.
+
+                    if (userNumber == randomNumber)
+                    {
+                        Console.WriteLine("Wohoo! Du klarade det!"); // output message if the guessed number matches the random generated one.
                         break;
                     }
-                    catch (Exception) 
+
+                    else if (userNumber >= 26)
                     {
-                        Console.WriteLine("Skriv bara siffror.");
+                        Console.WriteLine("Gissa bara på tal mellan 0 och 25."); // output message if the guessed number is higher then 25 and won't count it as a try.
+                        userTrys++;
                     }
-                } // Loop that will check so that user only use numbers as input.
 
-                if (userNumber == randomNumber)
+                    else if (userNumber > randomNumber)
+                    {
+                        tryCount--;
+                        Console.WriteLine($"Tyvärr, du gissade för högt! Du har {tryCount} gissningar kvar."); // output message if the guessed number is to high
+                    }
+
+                    else
+                    {
+                        tryCount--;
+                        Console.WriteLine($"Tyvärr, du gissade för lågt! Du har {tryCount} gissningar kvar."); // output message if the guessed number is to low.
+                    }
+
+                } // A loop that will loop 5 times or untill the user have guessed the right number.
+                Console.WriteLine();
+
+                if (tryCount == 0)
                 {
-                    Console.WriteLine("Wohoo! Du klarade det!"); // output message if the guessed number matches the random generated one.
-                    break;
+                    Console.WriteLine("Du lyckades inte gissa talet på fem försök!"); // output message if you've guessed wrong 5 times
                 }
+                Console.WriteLine();
+                Console.WriteLine("Tryck på en tangent...");
+                Console.ReadKey(); // wait for the user to push a key.
+                Console.Clear(); // clears the console.
+                Console.WriteLine("Vill du spela igen? Ja eller nej:");
 
-                else if (userNumber > randomNumber)
+                while (true)
                 {
-                    count--;
-                    Console.WriteLine($"Tyvärr, du gissade för högt! Du har {count} gissningar kvar."); // output message if the guessed number is to high
-                }
+                    string tryAgain = Console.ReadLine();
+                    if (tryAgain.ToLower() == "ja")
+                    {
+                        Console.WriteLine("Då kör vi en gång till!");
+                        Console.WriteLine();
+                        Console.WriteLine("Tryck på en tangent...");
+                        Console.ReadKey(); // wait for the user to push a key. 
+                        break;
+                    }
 
-                else 
-                {
-                    count--;
-                    Console.WriteLine($"Tyvärr, du gissade för lågt! Du har {count} gissningar kvar."); // output message if the guessed number is to low.
-                }
-                
-            } // A loop that will loop 5 times or untill the user have guessed the right number.
-            Console.WriteLine();
+                    else if (tryAgain.ToLower() == "nej")
+                    {
+                        Console.WriteLine("Spelet avslutas!");
+                        Console.WriteLine();
+                        Console.WriteLine("Tryck på en tangent...");
+                        Console.ReadKey();// wait for the user to push a key.
+                        tryAgainCount = 1;
+                        break;
+                    }
 
-            if (count == 0)
-            {
-                Console.WriteLine("Tyvärr, du lyckades inte gissa talet på fem försök! Spelet är slut."); // output message if you've guessed wrong 5 times
+                    else
+                    {
+                        Console.WriteLine("Förlåt, jag förstod inte.");
+                    }  // loop that will ask the user if they want to play again.
+                }
             }
+            while (tryAgainCount == 0);
         }
     }
 }
