@@ -14,7 +14,7 @@ namespace NumbersGame
         public static int RandomNumber()
         {
             Random random = new Random();
-            int number = random.Next(26, 26);
+            int number = random.Next(0, 25);
             return number; // A method to generate a random number from 0 to 25
         }
         static void Main(string[] args)
@@ -27,7 +27,6 @@ namespace NumbersGame
                 Console.Clear(); // clears the console from text.
                 Console.WriteLine("Välkommen! Jag tänker på ett nummer mellan 0 och 25. Kan du gissa vilket? Du får fem försök:");
                 int tryCount = 5;
-                Console.WriteLine(randomNumber);
                 for (int userTrys = 5; userTrys > 0; userTrys--)
                 {
                     int userNumber;
